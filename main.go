@@ -68,6 +68,7 @@ var minAppVersion = map[string]versionRule{
 	"01009b500007c000": {1245184, false}, // ARMS
 	"0100bde00862a000": {851968, false},  // Mario Tennis Aces
 	"01006a800016e000": {2031616, true},  // Super Smash Bros. Ultimate 13.0.5
+	"0100770008dd8000": {262144, true},   // Monster Hunter Generations Ultimate 1.4.0
 }
 
 // versionGateEnforce : par défaut on se contente de LOGGUER ce que la console
