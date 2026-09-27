@@ -33,6 +33,7 @@ import (
 	"log"
 	"math/big"
 	"net/http"
+	"net/url"
 	"os"
 	"strconv"
 	"strings"
@@ -390,6 +391,30 @@ func main() {
 		// Nintendo répond 200 corps VIDE. Sans ça : 404 -> "ne peut pas utiliser les fonctions en
 		// ligne" (le système conclut "pas de droit"). C'est LE bloqueur du message d'éligibilité.
 		case strings.HasPrefix(host, "dragons") && p == "/v2/elicenses/exercise":
+			w.WriteHeader(http.StatusOK)
+			return
+		// rights/available_elicenses : la console demande, au lancement d'un jeu en ligne, si ses droits
+		// ont une licence disponible. Sans réponse (404) le jeu s'arrête avant la connexion BaaS du jeu
+		// (Diablo III : 2124-3121). Chaque rights_id demandé est déclaré disponible, licence permanente.
+		case strings.HasPrefix(host, "dragons") && p == "/v2/rights/available_elicenses":
+			var in struct {
+				RightsIDs []string `json:"rights_ids"`
+			}
+			body, _ := io.ReadAll(r.Body)
+			json.Unmarshal(body, &in)
+			if len(in.RightsIDs) == 0 { // formulaire plutôt que JSON
+				if vals, err := url.ParseQuery(string(body)); err == nil {
+					in.RightsIDs = vals["rights_ids"]
+				}
+			}
+			out := make([]map[string]any, 0, len(in.RightsIDs))
+			for _, id := range in.RightsIDs {
+				out = append(out, map[string]any{"rights_id": id, "is_available": true, "elicense_type": "permanent"})
+			}
+			log.Printf("[nx-dauth] available_elicenses %v -> disponibles", in.RightsIDs)
+			json.NewEncoder(w).Encode(map[string]any{"available_elicenses": out})
+			return
+		case strings.HasPrefix(host, "dragons") && (p == "/v2/elicenses/report" || p == "/v2/elicenses/extend"):
 			w.WriteHeader(http.StatusOK)
 			return
 		case strings.HasPrefix(host, "dragons") && p == "/v2/elicenses/migration_state":
