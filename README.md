@@ -1,20 +1,13 @@
-<h1 align="center">nx-dauth</h1>
+# nextendo-dauth (nx-mod testing)
 
-<p align="center"><b>Device/application authentication server for Nextendo (self-signed Switch dauth chain).</b></p>
+nx-mod's `testing` fork of [nx-dauth](https://github.com/NextendoNetwork/nx-dauth): Device/application authentication server for Nextendo (self-signed Switch dauth chain).
+Part of [nextendo-testing](https://github.com/nx-mod/nextendo-testing): the whole Nextendo Network, run on a LAN. Upstream's README is kept as [README.upstream.md](README.upstream.md).
 
-<p align="center">
-  <img src="https://img.shields.io/badge/license-PolyForm%20Shield%201.0.0-orange" alt="License">
-  <img src="https://img.shields.io/badge/go-1.21%2B-00ADD8" alt="Go">
-</p>
+## nx-mod changes
 
----
+- **dragons `rights/available_elicenses`** (and `elicenses/report`/`extend`): online games stopped at this licence check without it.
+- Monster Hunter Generations Ultimate version gate (from CollectingW).
 
-Part of the [Nextendo Network](https://nextendo.network) server stack: see the
-architecture documentation for how it fits together with the game servers and the account server.
+## Credits
 
-Configuration is through environment variables; no secrets, keys, or infrastructure addresses are
-baked into the source. Ships no Nintendo code or data.
-
-## License
-
-Released under the **[PolyForm Shield License 1.0.0](LICENSE.md)**, source-available.
+nx-dauth is the work of the **Nextendo Network team** — https://nextendo.network. nx-mod only adds the changes above, for LAN testing. Nextendo is awesome.
